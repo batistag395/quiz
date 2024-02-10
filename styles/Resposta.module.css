@@ -2,14 +2,22 @@
     display: flex;
     min-width: 500px;
     width: 80%;
+    height: 100px;
     margin: 10px;
-    align-self: stretch;
-    background-color: crimson;
+}
+
+.conteudoResposta {
+    position: relative;
+    display: flex;
+    /* padding: 10px; */
+    flex: 1;
 }
 
 .frente, .verso{
+    position: absolute;
     display: flex;
     height: 100%;
+    width: 100%;
 }
 
 .frente {
@@ -21,6 +29,26 @@
 
 }
 
+.verso > div {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    flex: 1;
+    border-radius: 12px;
+}
+
+.certa {
+    background-color: #2baacd;
+}
+
+.errada {
+    background-color: #e44a4c;
+}
+
+.certa .valor, .errada .valor {
+    font-size: 1.5rem;
+}
 .letra {
     display: flex;
     justify-content: center;
@@ -31,6 +59,7 @@
     font-size: 1.3rem;
     font-weight: 700;
     margin-right: 20px;
+    color: #fff;
 }
 
 .valor {

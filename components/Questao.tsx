@@ -4,8 +4,16 @@ import styles from '../styles/Questao.module.css'
 import Enunciado from './Enunciado'
 import Resposta from './Resposta'
 
+const letras = [
+    {valor: 'A', cor: '#f2c866'},
+    {valor: 'B', cor: '#F266BA'},
+    {valor: 'C', cor: '#85D4F2'},
+    {valor: 'D', cor: '#BCE896'},
+]
+
 interface QuestaoProps {
     valor: QuestaoModel
+    respostaFornecida: (indice: number) => void
 }
 export default function Questao(props: QuestaoProps){
     const questao = props.valor
@@ -13,20 +21,19 @@ export default function Questao(props: QuestaoProps){
     function renderizarRespostas(){
         return questao.respostas.map((resposta, i) => {
             return <Resposta 
-            key={i}
+                key={i}
                 valor ={resposta}
                 indice={i}
-                letra="A"
-                corFundoLetra='#f2c866'
+                letra={letras[i].valor}
+                corFundoLetra={letras[i].cor}
+                respostaFornecida={props.respostaFornecida}
             />
         })
     }
     return (
         <div className={styles.questao}>
-            <h1>
                 <Enunciado texto={questao.enunciado}/>
                 {renderizarRespostas()}
-            </h1>
         </div>
     )
 }
