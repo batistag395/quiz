@@ -1,7 +1,8 @@
-import { useState } from 'react';
-import Questao from '../components/Questao'
+import { useEffect, useState } from 'react';
 import QuestaoModel from '../model/questao';
 import RespostaModel from '../model/resposta';
+import Questionario from '../components/Questionario';
+import BASE_URL from '../config'
 
 const questaoMock = new QuestaoModel(1, 'Qual é a Melhor cor?', [
   RespostaModel.errada('Verde'),
@@ -11,24 +12,41 @@ const questaoMock = new QuestaoModel(1, 'Qual é a Melhor cor?', [
 ])
 export default function Home() {
 
-  const [questao, setQuestao] = useState(questaoMock)
+  const [idsDasQuestoes, setIdsDasQuestoes] = useState<number[]>([])
+  const [questao, setQuestao] = useState<QuestaoModel>(questaoMock)
 
-  function respostaFornecida(indice: number){
-    console.log(indice)
-    setQuestao(questao.responderCom(indice))
+  async function carregarIdsDasQuestoes(){
+    const resp = await fetch(`${BASE_URL}/questionario`)
+    const idsDasQuestoes = await resp.json()
+    setIdsDasQuestoes(idsDasQuestoes)
   }
-  console.log(respostaFornecida)
-  return (
-    <div style={{
-      display: 'flex',
-      justifyContent:'center',
-      alignItems:'center',
-      height: '100vh',
 
-    }}>
-
-      <Questao valor={questao} respostaFornecida={respostaFornecida}/>
-    </div>
+  async function carregarQuestoes(idQuestao: number){
+    const resp = await fetch(`${BASE_URL}/questoes/${idQuestao}`)
+    const json = await resp.json()
+  }
   
+  useEffect(() => {
+    carregarIdsDasQuestoes()
+  }, [])
+
+  useEffect(() => {
+    idsDasQuestoes.length > 0 && carregarQuestoes(idsDasQuestoes[0])
+  }, [idsDasQuestoes])
+
+  function questaoRespondida(questao: QuestaoModel){
+
+  }
+  function irParaProximoPasso(){
+
+  }
+  return (
+        <Questionario
+          questao={questao}
+          ultima={true}
+          questaoRespondida={questaoRespondida}
+          irParaProximoPasso={irParaProximoPasso}
+        ></Questionario>
+
   );
 }
