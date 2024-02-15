@@ -3,7 +3,6 @@ import QuestaoModel from '../model/questao';
 import Questionario from '../components/Questionario';
 import BASE_URL from '../config'
 import { useRouter } from 'next/router';
-
 export default function Home() {
 
   const router = useRouter()
