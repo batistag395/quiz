@@ -11,7 +11,7 @@ export default function Botao(props){
         return (
             <button 
                 className={styles.botao}
-                onClick={props.onClicj}
+                onClick={props.onClick}
             >
                 {props.texto}
             </button>
